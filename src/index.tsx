@@ -18,7 +18,7 @@ class Button extends Component<{}, {}> {
     @SetsState("counter")
     store: Observable<any> = store;
 
-    @SetsState("sqaure")
+    @SetsState("square")
     store2: Observable<any> = store.map(x => x*x);
 
     constructor() {

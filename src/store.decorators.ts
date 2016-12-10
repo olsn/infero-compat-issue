@@ -5,7 +5,7 @@ import "rxjs/add/operator/do";
 import "rxjs/add/operator/catch";
 
 export function SetsState(prop?: string) {
-    return function(target: Object, propertyKey: string) {
+    return function(target: any, propertyKey: string) {
         let val;
         let stream$;
         let subscription;

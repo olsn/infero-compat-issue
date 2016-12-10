@@ -32,7 +32,7 @@ module.exports = {
 
     module: {
         loaders: [
-            { test: /\.ts(x?)$/, loader: "awesome-typescript-loader",
+            { test: /\.ts(x?)$/, loader: "ts-loader",
                 exclude: /node_modules[\\\/]inferno[\\\/]inferno\.d\.ts/
             },
             {
