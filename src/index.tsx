@@ -2,8 +2,10 @@ import {render} from "inferno";
 import * as createElement from "inferno-create-element";
 import * as Component from "inferno-component";
 import {registerStore} from "./store";
-import {Subject} from "rxjs/Subject";
 import "rxjs/add/operator/takeUntil";
+import {SetsState} from "./store.decorators";
+import {Observable} from "rxjs/Observable";
+import "rxjs/add/operator/map";
 
 const reducer = (state = 0, action: any): any => {
     return state + (action.payload || 0);
@@ -13,25 +15,17 @@ const store = registerStore(reducer);
 
 class Button extends Component<{}, {}> {
 
-    unmounted$ = new Subject();
+    @SetsState("counter")
+    store: Observable<any> = store;
+
+    @SetsState("sqaure")
+    store2: Observable<any> = store.map(x => x*x);
 
     constructor() {
         super();
     }
 
-    componentDidMount() {
-        // update time every second
-        store
-            .takeUntil(this.unmounted$)
-            .subscribe(counter => this.setState({counter}));
-    }
-
-    componentWillUnmount() {
-        this.unmounted$.next();
-    }
-
     clickedBtn(num: number = 1) {
-        console.log("btn clicked!");
         store.dispatch({type: "up", payload: num});
     }
 
@@ -39,6 +33,7 @@ class Button extends Component<{}, {}> {
         return (
             <div>
                 <Output count={this.state.counter} />
+                <Output count={this.state.square} />
                 <br/>
                 <button onClick={() => this.clickedBtn(1)}>Count up!</button>
                 <br/>
