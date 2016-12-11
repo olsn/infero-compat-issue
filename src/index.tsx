@@ -2,17 +2,36 @@ import {render} from "inferno";
 import * as createElement from "inferno-create-element";
 import * as Component from "inferno-component";
 import {registerStore} from "./store";
+import {Effect} from "./effects";
 import "rxjs/add/operator/takeUntil";
 import {SetsState} from "./store.decorators";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
+import "rxjs/add/operator/mapTo";
 
+////////////////////////////////////////////////////////
+// REDUCER
 const reducer = (state = 0, action: any): any => {
+    console.log("StateChange:", state, action.type, action.payload);
     return state + (action.payload || 0);
 };
 
-const store = registerStore(reducer);
+////////////////////////////////////////////////////////
+// EFFECTS
+class ButtonEffects {
+    @Effect()
+    dummyEffect = store.actions$
+        .ofType("up")
+        .mapTo({type: "test", payload: -1});
+}
 
+////////////////////////////////////////////////////////
+// The Store
+const store = registerStore(reducer);
+store.addEffects(ButtonEffects);
+
+////////////////////////////////////////////////////////
+// The Component
 class Button extends Component<{}, {}> {
 
     @SetsState("counter")
