@@ -8,6 +8,10 @@ import { Actions } from './actions';
 import { merge } from 'rxjs/observable/merge';
 import { Subscription } from 'rxjs/Subscription';
 
+export interface IRootReducer<T> {
+    [key: string]: ActionReducer<any>;
+}
+
 export class Store<T> extends NgStore<T> {
     public actions$: Actions;
 
@@ -20,11 +24,10 @@ export class Store<T> extends NgStore<T> {
 
     public addEffects(...effectsClasses: any[]): void {
         const sources = effectsClasses
-            .map(clazz => new clazz)
+            .map(clazz => new clazz(this))
             .map(mergeEffects);
         const merged = merge(...sources);
 
-        
         this.effectsSubscription.add(merged.subscribe(this));
     }
 }
@@ -55,7 +58,7 @@ function _reducerFactory(dispatcher, reducer) {
     return new Reducer(dispatcher, reducer);
 }
 
-export function registerStore<T>(actionReducer: ActionReducer<T>, initialState?: T): Store<T> {
+export function registerStore<T>(actionReducer: ActionReducer<T> | IRootReducer<T>, initialState?: T): Store<T> {
     actionReducer = _initialReducerFactory(actionReducer);
     initialState = _initialStateFactory(initialState, actionReducer);
 

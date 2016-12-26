@@ -1,3 +1,4 @@
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
@@ -10,8 +11,7 @@ module.exports = {
         filename: "bundle.js"
     },
 
-    // Enable sourcemaps for debugging webpack"s output.
-    devtool: "source-map",
+    devtool: "cheap-module-source-map",
 
     plugins: [
         new HtmlWebpackPlugin(
@@ -27,7 +27,11 @@ module.exports = {
         )
     ],
     resolve: {
-        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js"]
+        extensions: ["", ".webpack.js", ".web.js", ".ts", ".tsx", ".js", ".jsx"],
+        alias: {
+            'react': 'inferno-compat',
+            'react-dom': 'inferno-compat'
+        }
     },
 
     module: {
@@ -36,8 +40,12 @@ module.exports = {
                 exclude: /node_modules[\\\/]inferno[\\\/]inferno\.d\.ts/
             },
             {
-                test: /\.js$/,
-                loader: 'babel-loader?presets[]=es2015'
+                test: /\.js(x?)$/,
+                loader: 'babel-loader'
+            },
+            {
+                test: /\.css$/,
+                loader: 'style!css'
             }
         ]
     },

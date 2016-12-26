@@ -6,12 +6,10 @@ import "rxjs/add/operator/catch";
 
 export function SetsState(prop?: string) {
     return function(target: any, propertyKey: string) {
-        let val;
-        let stream$;
-        let subscription;
         Object.defineProperty(target, propertyKey, {
             set: function (value: any) {
-                val = value;
+                let val = this["___" + propertyKey] = value;
+                let subscription = this["___" + propertyKey + "_sub"];
                 if (subscription) {
                     subscription.unsubscribe();
                 }
@@ -30,13 +28,13 @@ export function SetsState(prop?: string) {
                     }
                 }
 
-                stream$ = val
+                let stream$ = val
                     .takeUntil(unmounted$)
                     .distinctUntilChanged()
                     .do(propVal => prop ? this.setState({[prop]: propVal}) : this.setState(propVal));
 
                 const makeSub = () => {
-                    subscription = stream$
+                    this["___" + propertyKey + "_sub"] = stream$
                         .catch(() => stream$)
                         .subscribe();
                 };
@@ -55,7 +53,7 @@ export function SetsState(prop?: string) {
                 }
             },
             get: function (): any {
-                return val;
+                return this["___" + propertyKey];
             },
             enumerable: true,
             configurable: true
