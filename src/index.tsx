@@ -1,15 +1,13 @@
 import {render} from "inferno";
 import * as createElement from "inferno-create-element";
 import * as Component from "inferno-component";
-import {registerStore, Store} from "./store";
-import {Provider} from "./provider";
-import {Effect} from "./effects";
+import {Store, SetsState} from "nongrx/store";
+import {Provider} from "nongrx/inferno";
 import "rxjs/add/operator/takeUntil";
-import {SetsState} from "./store.decorators";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
-import "rxjs/add/operator/mapTo";
 import {Resizable} from 'react-resizable';
+import {store} from "./nongrx";
 
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
@@ -17,34 +15,14 @@ import "react-resizable/css/styles.css";
 import {Responsive, WidthProvider} from 'react-grid-layout';
 const ResponsiveReactGridLayout = WidthProvider(Responsive);
 
-////////////////////////////////////////////////////////
-// REDUCER
-const reducer = (state = 0, action: any): any => {
-    console.log("StateChange:", state, action.type, action.payload);
-    return state + (action.payload || 0);
-};
-
-////////////////////////////////////////////////////////
-// EFFECTS
-class ButtonEffects {
-    constructor(private store: Store<any>) {}
-
-    @Effect()
-    dummyEffect = this.store.actions$
-        .ofType("up")
-        .mapTo({type: "test", payload: -1});
-}
-
-////////////////////////////////////////////////////////
-// The Component
 class Button extends Component<{}, {store: Store<any>}> {
     store: Store<any> = this.context.store;
 
-    @SetsState("counter")
-    counter$: Observable<any> = this.store;
+    @SetsState()
+    counter: Observable<any> = this.store;
 
-    @SetsState("square")
-    square$: Observable<any> = this.store.map(x => x*x);
+    @SetsState()
+    square: Observable<any> = this.store.map(x => x * x);
 
     constructor(public props, public context) {
         super(props, context);
@@ -125,11 +103,6 @@ class AppD extends Component<{}, {}> {
 function Output({count}) {
      return <span>Test! Count: {count}</span>
 }
-
-////////////////////////////////////////////////////////
-// The Store
-const store = registerStore(reducer);
-store.addEffects(ButtonEffects);
 
 render(
     <Provider store={store}>
