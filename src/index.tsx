@@ -1,8 +1,8 @@
 import {render} from "inferno";
-import * as createElement from "inferno-create-element";
-import * as Component from "inferno-component";
-import {Store, SetsState} from "nongrx/store";
-import {Provider} from "nongrx/inferno";
+import createElement from "inferno-create-element";
+import Component from "inferno-component";
+import {Store} from "nongrx/store";
+import {Provider, SetsState} from "nongrx/inferno";
 import "rxjs/add/operator/takeUntil";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
@@ -88,13 +88,6 @@ class AppD extends Component<{}, {}> {
                     <div key={"b"} className="bg-grey"><Button/></div>
                     <div key={"c"} className="bg-grey">{"<-- Test -->"}</div>
                 </ResponsiveReactGridLayout>
-                <div>
-                    <Resizable className="box" height={this.state.height} width={this.state.width}>
-                        <div className="box" style={{width: this.state.width + 'px', height: this.state.height + 'px'}}>
-                            <span className="text">Raw use of element. 200x200, no constraints.</span>
-                        </div>
-                    </Resizable>
-                </div>
             </div>
         );
     }

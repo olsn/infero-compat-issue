@@ -36,8 +36,9 @@ module.exports = {
 
     module: {
         loaders: [
-            { test: /\.ts(x?)$/, loader: "ts-loader",
-                exclude: /node_modules[\\\/]inferno[\\\/]inferno\.d\.ts/
+            {
+                test: /\.ts(x?)$/,
+                loader: "babel-loader!ts-loader"
             },
             {
                 test: /\.js(x?)$/,
