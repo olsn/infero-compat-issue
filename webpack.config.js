@@ -38,10 +38,12 @@ module.exports = {
         loaders: [
             {
                 test: /\.ts(x?)$/,
+                exclude: /node_modules(?![\/\\]@ngrx[\/\\]store[\/\\]src)/,
                 loader: "babel-loader!ts-loader"
             },
             {
                 test: /\.js(x?)$/,
+                exclude: /node_modules(?![\/\\]@ngrx[\/\\]store[\/\\]src)/,
                 loader: 'babel-loader'
             },
             {
