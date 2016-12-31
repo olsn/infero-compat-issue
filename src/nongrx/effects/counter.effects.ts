@@ -1,11 +1,13 @@
 import {Effect, Actions} from "nongrx/effects";
-import "rxjs/add/operator/mapTo";
+import "rxjs/add/operator/map";
+import "rxjs/add/operator/delay";
 
 export class CounterEffects {
     constructor(private actions$: Actions) {}
 
     @Effect()
-    dummyEffect = this.actions$
-        .ofType("up")
-        .mapTo({type: "test", payload: -1});
+    delayEffect = this.actions$
+        .ofType("up_delayed")
+        .delay(1000)
+        .map(action => ({...action, type: "up"}));
 }
