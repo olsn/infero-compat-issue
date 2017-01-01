@@ -4,22 +4,27 @@ import {Store} from "nongrx/store";
 import {SetsState} from "nongrx/inferno";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
+import * as counter from "./../../nongrx/actions/counter.actions";
+import {IState, getCount} from "../../nongrx/reducers";
 
-export class Counter extends Component<{}, {store: Store<number>}> {
-    store: Store<number> = this.context.store;
+export class Counter extends Component<{}, {store: Store<IState>}> {
+    store: Store<IState> = this.context.store;
 
     @SetsState()
-    counter: Observable<number> = this.store;
+    counter: Observable<number> = this.store.select(getCount);
 
     @SetsState()
-    square: Observable<number> = this.store.map(x => x * x);
+    square: Observable<number> = this.counter.map(x => x * x);
 
     constructor(public props, public context) {
         super(props, context);
     }
 
     clickedBtn(delayed: boolean = false) {
-        this.context.store.dispatch({type: delayed ? "up_delayed" : "up", payload: 1});
+        const action: counter.Actions = delayed
+            ? new counter.IncrementDelayedAction(1)
+            : new counter.IncrementAction(1);
+        this.context.store.dispatch(action);
     }
 
     render() {

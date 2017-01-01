@@ -1,11 +1,28 @@
-import {Action} from "nongrx/store";
+import * as counter from "./../actions/counter.actions";
 
-export const CounterReducer = (state = 0, action: Action): any => {
+export interface IState {
+    count: number;
+    lastIncrement?: Date;
+}
+
+const initialState = {
+    count: 0
+};
+
+export const reducer = (state: IState = initialState, action: counter.Actions): any => {
     console.log("Oldstate:", state, "Action:", action.type, "Payload:", action.payload);
     switch (action.type) {
-        case "up":
-            return state + (action.payload || 0);
+        case counter.ActionTypes.INCREMENT:
+            return {
+                ...state,
+                count: state.count + action.payload,
+                lastIncrement: new Date()
+            };
+        default: {
+            return state;
+        }
     }
-
-    return state;
 };
+
+export const getCount = (state: IState) => state.count;
+export const getLastIncrement = (state: IState) => state.lastIncrement;

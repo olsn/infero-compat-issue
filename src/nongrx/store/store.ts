@@ -1,6 +1,6 @@
 import {registerStore} from "nongrx/store";
-import {CounterReducer} from "../reducers";
+import {reducers} from "../reducers";
 import {CounterEffects} from "../effects";
 
-export const store = registerStore(CounterReducer);
+export const store = registerStore(reducers);
 store.addEffects(CounterEffects);
