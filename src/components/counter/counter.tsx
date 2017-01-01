@@ -18,6 +18,11 @@ export class Counter extends Component<{}, {store: Store<IState>}> {
 
     constructor(public props, public context) {
         super(props, context);
+        console.log("newww!", this);
+
+        this["componentWillUnmount"] = () => {
+            console.log("Counter will unmount?!");
+        }
     }
 
     clickedBtn(delayed: boolean = false) {

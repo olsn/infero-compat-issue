@@ -31,6 +31,7 @@ export class Status extends Component<{}, {store: Store<IState>}> {
 
     constructor(public props, public context) {
         super(props, context);
+        console.log("RRRR", this);
     }
 
     render() {
@@ -39,6 +40,8 @@ export class Status extends Component<{}, {store: Store<IState>}> {
                 Count: {this.state.counter}
                 <br/>
                 Elapsed seconds since last increment: {this.state.secondsSinceLast}
+                <br/>
+                <input type="text"/>
             </div>
         );
     }

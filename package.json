@@ -25,11 +25,11 @@
     "inferno-create-element": "1.0.3",
     "inferno-dom": "1.0.3",
     "jquery": "3.1.1",
-    "nongrx": "0.3.0",
+    "nongrx": "0.3.1",
     "react-grid-layout": "0.13.9",
     "react-resizable": "1.4.5",
     "reselect": "2.5.4",
-    "rxjs": "^5.0.0"
+    "rxjs": "5.0.2"
   },
   "devDependencies": {
     "awesome-typescript-loader": "3.0.0-beta.9",
