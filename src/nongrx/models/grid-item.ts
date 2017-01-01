@@ -1,8 +1,3 @@
-export enum GridComponent {
-    COUNTER = <any>"Counter",
-    STATUS = <any>"Status"
-}
-
 export interface IGridItem {
     i: string;
     x: number;
@@ -17,5 +12,6 @@ export interface IGridItem {
     isDraggable?: boolean;
     isResizable?: boolean;
 
-    component: GridComponent;
+    component: string;
+    componentInstance?: any;
 }

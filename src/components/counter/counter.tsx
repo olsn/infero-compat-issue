@@ -1,13 +1,14 @@
 import createElement from "inferno-create-element";
-import Component from "inferno-component";
 import {Store} from "nongrx/store";
 import {SetsState} from "nongrx/inferno";
 import {Observable} from "rxjs/Observable";
 import "rxjs/add/operator/map";
 import * as counter from "./../../nongrx/actions/counter.actions";
 import {IState, getCount} from "../../nongrx/reducers";
+import {RegisterGridComponent, GridComponent} from "../grid-component";
 
-export class Counter extends Component<{}, {store: Store<IState>}> {
+@RegisterGridComponent("Counter")
+export class Counter extends GridComponent<{}> {
     store: Store<IState> = this.context.store;
 
     @SetsState()
@@ -18,11 +19,6 @@ export class Counter extends Component<{}, {store: Store<IState>}> {
 
     constructor(public props, public context) {
         super(props, context);
-        console.log("newww!", this);
-
-        this["componentWillUnmount"] = () => {
-            console.log("Counter will unmount?!");
-        }
     }
 
     clickedBtn(delayed: boolean = false) {
@@ -44,5 +40,9 @@ export class Counter extends Component<{}, {store: Store<IState>}> {
                 <button onClick={() => this.clickedBtn(true)}>Count up delayed 1s</button>
             </div>
         );
+    }
+
+    static create() {
+        return <Counter/>;
     }
 }

@@ -10,8 +10,10 @@ import "rxjs/add/operator/switchMapTo";
 import "rxjs/add/observable/merge";
 import "rxjs/add/observable/timer";
 import {IState, getCount, getLastIncrement} from "../../nongrx/reducers";
+import {RegisterGridComponent, GridComponent} from "../grid-component";
 
-export class Status extends Component<{}, {store: Store<IState>}> {
+@RegisterGridComponent("Status")
+export class Status extends GridComponent<{}> {
     store: Store<IState> = this.context.store;
 
     @SetsState()
@@ -31,7 +33,6 @@ export class Status extends Component<{}, {store: Store<IState>}> {
 
     constructor(public props, public context) {
         super(props, context);
-        console.log("RRRR", this);
     }
 
     render() {
@@ -40,9 +41,11 @@ export class Status extends Component<{}, {store: Store<IState>}> {
                 Count: {this.state.counter}
                 <br/>
                 Elapsed seconds since last increment: {this.state.secondsSinceLast}
-                <br/>
-                <input type="text"/>
             </div>
         );
+    }
+
+    static create() {
+        return <Status/>;
     }
 }

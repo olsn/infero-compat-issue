@@ -1,0 +1,19 @@
+.kpi {
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  justify-content: space-around;
+
+  .kpi-value {
+    flex: 1;
+    display: flex;
+    font-size: 6em;
+    flex-direction: column;
+    justify-content: space-around;
+  }
+
+  .kpi-label {
+
+  }
+}

@@ -1,5 +1,5 @@
 import {Action, actionType} from "nongrx/store";
-import {IGridItem, GridComponent} from "../models/grid-item";
+import {IGridItem} from "../models/grid-item";
 
 export const ActionTypes = {
     ADD_ITEM: actionType("[Grid] Add Item"),
@@ -11,13 +11,13 @@ export class AddItemAction implements Action {
     type = ActionTypes.ADD_ITEM;
     payload: IGridItem;
 
-    constructor(component: GridComponent) {
+    constructor(component: string) {
         this.payload = {
             i: (+new Date()).toString(),
             component,
             x: 0,
             y: 0,
-            w: 6,
+            w: 2,
             h: 2
         };
     }

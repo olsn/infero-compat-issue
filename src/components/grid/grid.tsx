@@ -12,7 +12,8 @@ import * as grid from "../../nongrx/actions/grid.actions";
 
 import "react-grid-layout/css/styles.css";
 import "react-resizable/css/styles.css";
-import {IGridItem, GridComponent} from "../../nongrx/models/grid-item";
+import {IGridItem} from "../../nongrx/models/grid-item";
+import {COMPONENT_DICT} from "../grid-component";
 
 export class Grid extends Component<{}, {store: Store<IState>}> {
     store: Store<IState> = this.context.store;
@@ -44,20 +45,10 @@ export class Grid extends Component<{}, {store: Store<IState>}> {
 
         const gridComponents = this.state.gridItems
             .map((item: IGridItem) => {
-                let component;
-                switch (item.component) {
-                    case GridComponent.COUNTER:
-                        component = <Counter/>;
-                        break;
-                    case GridComponent.STATUS:
-                        component = <Status/>;
-                        break;
-                }
-
                 return (
                     <div key={item.i} className="bg-grey">
                         <div className="remove-btn" onClick={() => this.removeItem(item.i)}>&#10006;</div>
-                        {component}
+                        {item.componentInstance ? item.componentInstance : item.componentInstance = COMPONENT_DICT[item.component].create({source: Math.random().toString(), label: "Pull Ups"})}
                     </div>
                 );
             });

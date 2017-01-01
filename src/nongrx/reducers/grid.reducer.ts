@@ -1,5 +1,5 @@
 import * as grid from "./../actions/grid.actions";
-import {IGridItem, GridComponent} from "../models/grid-item";
+import {IGridItem} from "../models/grid-item";
 
 export interface IState {
     items: IGridItem[];
@@ -7,8 +7,7 @@ export interface IState {
 
 const initialState: IState = {
     items: [
-        {i: 'a', x: 0, y: 0, w: 6, h: 2, component: GridComponent.COUNTER},
-        {i: 'b', x: 6, y: 0, w: 6, h: 2, component: GridComponent.STATUS}
+        {i: 'a', x: 0, y: 0, w: 2, h: 2, component: "Counter"}
     ]
 };
 
